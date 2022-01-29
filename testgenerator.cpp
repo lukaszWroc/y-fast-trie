@@ -4,23 +4,23 @@ using namespace std;
 
 #define FAIL(x) if (x) goto fail;
 
-typedef std::function<void(int, long long int)> createFunction;
+typedef std::function<void(int, int)> createFunction;
 
 mt19937 random_generator;
 
-void create(char c, int n, long long int univ)
+void create(char c, int n, int univ)
 {
   while (n--)
   {
-    cout << c << " " << std::uniform_int_distribution<unsigned long long int>(0,univ)(random_generator) << "\n";
+    cout << c << " " << std::uniform_int_distribution<unsigned int>(0,univ)(random_generator) << "\n";
   }
 }
-void createData(int n, long long int univ)
+void createData(int n, int univ)
 {
   create('i', n, univ);
 }
 
-void createQuestions(int n, long long int univ)
+void createQuestions(int n, int univ)
 {
   create('q', n, univ);
 }
@@ -41,13 +41,13 @@ int main(int argc, char *argv[])
 {
   map<string, createFunction>::iterator ele;
   int n;
-  long long int univ;
+  int univ;
 
-  array<mt19937::UIntType, mt19937::state_size> state;
-  sysrandom(state.begin(), state.length*sizeof(mt19937::UIntType));
-  seed_seq s(state.begin(), state.end());
+  std::array<int, std::mt19937::state_size> state;
+  sysrandom(state.begin(), state.size()*sizeof(int));
+  std::seed_seq s(state.begin(), state.end());
 
-  random_generator.seed(s)
+  random_generator.seed(s);
 
   FAIL(argc != 4);
 
@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
   univ = stoll(argv[3]);
 
   FAIL((0 > n || n > 2e8));
-  FAIL((0 > univ || univ > 2e11));
+  FAIL((0 > univ || univ > 2e19));
 
   ele -> second(n, univ);
 

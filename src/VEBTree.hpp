@@ -8,47 +8,47 @@
 
 class VEBTree
 {
-  long long int universe_;
-  long long int min_;
-  long long int max_;
-  long long int numOfBits_;
+  int universe_;
+  int min_;
+  int max_;
+  int numOfBits_;
 
   VEBTree *summary_;
 
   std::vector<VEBTree*> clusters_;
 
-  inline long long int index(long long int high, long long int low)
+  inline int index(int high, int low)
   {
     return (high << numOfBits_) | low;
   };
 
-  inline long long int getHigh(long long int x)
+  inline int getHigh(int x)
   {
     return x >> numOfBits_;
   };
 
-  inline long long int getLow(long long int x)
+  inline int getLow(int x)
   {
     return ((x >> numOfBits_) << numOfBits_) ^ x;
   };
 
 public:
-  VEBTree(long long int universe);
+  VEBTree(int universe);
   ~VEBTree();
 
-  void insert(long long int x);
+  void insert(int x);
 
-  bool member(long long int x);
+  bool member(int x);
 
-  long long int predecessor(long long int x);
-  long long int successor(long long int x);
+  int predecessor(int x);
+  int successor(int x);
 
-  inline long long int minimum()
+  inline int minimum()
   {
     return min_;
   }
 
-  inline long long int maximum()
+  inline int maximum()
   {
     return max_;
   }

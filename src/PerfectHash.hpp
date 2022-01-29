@@ -10,6 +10,18 @@ class PerfectHash
   std::unordered_map<KEY, VAL*> table_;
 
 public:
+  PerfectHash()
+  {
+  }
+
+  ~PerfectHash()
+  {
+    for (auto& it : table_)
+    {
+      delete it.second;
+    }
+  }
+
   VAL *find(KEY x)
   {
     if (table_.find(x) != table_.end())

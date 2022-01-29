@@ -10,14 +10,14 @@ class YFastTrieInterface : public TreeBase
   YFastTrie *tree_;
 
 public:
-  YFastTrieInterface(std::vector<long long int>& input, long long int universe);
-  YFastTrieInterface(std::vector<long long int>& input, long long int universe, int state);
+  YFastTrieInterface(std::vector<int>& input, int universe);
+  YFastTrieInterface(std::vector<int>& input, int universe, int state);
   ~YFastTrieInterface();
 
-  long long int predecessor(long long int x);
-  long long int successor(long long int x);
+  int predecessor(int x);
+  int successor(int x);
 
-  bool member(long long int x);
+  bool member(int x);
 };
 
 #endif // YFASTTRIEINTERFACE_H

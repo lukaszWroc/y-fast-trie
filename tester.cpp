@@ -4,6 +4,7 @@
 #include "./src/VEBTreeInterface.hpp"
 #include "./src/XFastTrieInterface.hpp"
 #include "./src/YFastTrieInterface.hpp"
+#include "./src/BSTInterface.hpp"
 
 using namespace std;
 
@@ -16,8 +17,8 @@ struct Options
   string outPath;
   string treeName;
 
-  long long int universum;
-  long long int state;
+  int universum;
+  int state;
 };
 
 bool parseArgs(Options &options, int argc, char *argv[])
@@ -44,7 +45,7 @@ bool parseArgs(Options &options, int argc, char *argv[])
   return true;
 }
 
-void readVector(string file, vector<long long int> &v)
+void readVector(string file, vector<int> &v)
 {
   ifstream fhandle(file);
 
@@ -53,25 +54,24 @@ void readVector(string file, vector<long long int> &v)
     while (!fhandle.eof())
     {
       char c;
-      long long int x;
+      int x;
 
       fhandle >> c >> x;
 
-      v.push_back(x);
+      v.emplace_back(x);
     }
 
     fhandle.close();
   }
 }
 
-void writeVector(string file, vector<long long int> &v)
+void writeVector(string file, vector<int> &v)
 {
   fstream fhandle(file, ios::out);
 
   if (fhandle.is_open())
   {
-
-    for (long long int x : v)
+    for (int x : v)
     {
       fhandle << x << "\n";
     }
@@ -80,7 +80,7 @@ void writeVector(string file, vector<long long int> &v)
   }
 }
 
-void setTree(TreeBase *&tree, Options &options, vector<long long int> &v)
+void setTree(TreeBase *&tree, Options &options, vector<int> &v)
 {
   if (options.treeName == "--veb")
   {
@@ -93,6 +93,10 @@ void setTree(TreeBase *&tree, Options &options, vector<long long int> &v)
   else if (options.treeName == "--yfasttrie")
   {
     tree = new YFastTrieInterface(v, options.universum, options.state);
+  } 
+  else if (options.treeName == "--bst")
+  {
+    tree = new BSTInterface(v);
   }
 }
 
@@ -105,31 +109,47 @@ int main(int argc, char *argv[])
     return -1;
   }
 
-  vector<long long int> in;
-  vector<long long int> out;
-  vector<long long int> questions;
+  vector<int> in;
+  vector<int> questions;
 
-  readVector(options.dataPath,      in);
-  readVector(options.questionsPath, questions);
+  readVector(options.dataPath, in);
 
   TreeBase *tree = NULL;
 
   setTree(tree, options, in);
 
+  if (tree == NULL)
+  {
+    return -1;
+  }
+
+  readVector(options.questionsPath, questions);
+
   std::chrono::high_resolution_clock::time_point startTime(std::chrono::high_resolution_clock::now());
 
-  for (long long int x : questions)
+  #ifdef TEST
+  vector<int> out;
+
+  for (int x : questions)
   {
-    out.push_back(tree -> successor(x));
+    out.emplace_back(tree -> successor(x));
   }
+
+  writeVector(options.outPath, out);
+  #else
+  for (int x : questions)
+  {
+    tree -> successor(x);
+  }
+  #endif
 
   std::chrono::high_resolution_clock::time_point endTime(std::chrono::high_resolution_clock::now());
 
   ulong ms = std::chrono::duration_cast<std::chrono::milliseconds>(endTime-startTime).count();
 
-  cout << ms;
+  cout << ms << "\n";
 
-  writeVector(options.outPath, out);
+  delete tree;
 
   return 0;
 }

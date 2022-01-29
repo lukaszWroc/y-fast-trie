@@ -6,24 +6,24 @@
 
 class BST
 {
-  std::set<long long int> set_;
-  std::set<long long int> rSet_;
+  std::set<int> set_;
+  std::set<int> rSet_;
 
-  long long int max_;
-  long long int min_;
+  int max_;
+  int min_;
 
 public:
   BST();
 
-  long long int maximum();
-  long long int minimum();
-  long long int size();
-  long long int predecessor(long long int x);
-  long long int successor(long long int x);
+  int maximum();
+  int minimum();
+  int size();
+  int predecessor(int x);
+  int successor(int x);
 
-  void insert(long long int x);
+  void insert(int x);
 
-  bool find(long long int x);
+  bool find(int x);
 };
 
 #endif // BST_H

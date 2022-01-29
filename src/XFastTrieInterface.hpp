@@ -10,13 +10,13 @@ class XFastTrieInterface : public TreeBase
   XFastTrie *tree_;
 
 public:
-  XFastTrieInterface(std::vector<long long int>& input, long long int universe);
+  XFastTrieInterface(std::vector<int>& input, int universe);
   ~XFastTrieInterface();
 
-  long long int predecessor(long long int x);
-  long long int successor(long long int x);
+  int predecessor(int x);
+  int successor(int x);
 
-  bool member(long long int x);
+  bool member(int x);
 };
 
 #endif // XFASTTRIEINTERFACE_H

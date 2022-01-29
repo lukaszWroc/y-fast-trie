@@ -8,24 +8,24 @@
 
 class InternalNode
 {
-  long long int il_, ir_, descedant_;
+  int il_, ir_, descedant_;
 
 public:
-  InternalNode(long long int il, long long int ir, long long int descedant) : il_(il), ir_(ir), descedant_(descedant)
+  InternalNode(int il, int ir, int descedant) : il_(il), ir_(ir), descedant_(descedant)
   {
   }
 
-  long long int getDescedant()
+  int getDescedant()
   {
     return descedant_;
   }
 
-  long long int getIndexLeft()
+  int getIndexLeft()
   {
     return il_;
   }
 
-  long long int getIndexRight()
+  int getIndexRight()
   {
     return ir_;
   }
@@ -33,22 +33,22 @@ public:
 
 class XFastTrie
 {
-  long long int universe_;
-  long long int levels_;
+  int universe_;
+  int levels_;
 
-  std::vector<long long int> input_;
+  std::vector<int> input_;
 
-  std::vector<PerfectHash<long long int, InternalNode>> levelsList_;
+  std::vector<PerfectHash<int, InternalNode>> levelsList_;
 
 public:
-  XFastTrie(long long int universe, const std::vector<long long int> &input);
+  XFastTrie(int universe, std::vector<int> &input);
   ~XFastTrie();
 
-  bool member(long long int x);
+  bool member(int x);
 
-  long long int predSuccBase(long long int x);
-  long long int predecessor(long long int x);
-  long long int successor(long long int x);
+  int predSuccBase(int x);
+  int predecessor(int x);
+  int successor(int x);
 };
 
 #endif // XFASTTRIE_H

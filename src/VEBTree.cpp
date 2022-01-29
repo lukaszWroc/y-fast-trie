@@ -1,9 +1,9 @@
 #include "VEBTree.hpp"
 
-VEBTree::VEBTree(long long int universe) : universe_(universe), min_(VEBTREE_NIL),
+VEBTree::VEBTree(int universe) : universe_(universe), min_(VEBTREE_NIL),
   max_(VEBTREE_NIL), numOfBits_((63 - __builtin_clzl(universe))/2), summary_(NULL)
 {
-  if (universe_ <= 0)
+  if (universe_ == 0)
   {
     return;
   }
@@ -30,7 +30,7 @@ VEBTree::~VEBTree()
   clusters_.clear();
 }
 
-void VEBTree::insert(long long int x)
+void VEBTree::insert(int x)
 {
   if (x < 0 || universe_ <= x)
   {
@@ -51,8 +51,8 @@ void VEBTree::insert(long long int x)
 
     if (universe_ > 2)
     {
-      long long int high = getHigh(x);
-      long long int low  = getLow(x);
+      int high = getHigh(x);
+      int low  = getLow(x);
 
       if (clusters_[high] == NULL)
       {
@@ -83,7 +83,7 @@ void VEBTree::insert(long long int x)
   }
 }
 
-long long int VEBTree::successor(long long int x)
+int VEBTree::successor(int x)
 {
   if (universe_ == 2)
   {
@@ -102,10 +102,10 @@ long long int VEBTree::successor(long long int x)
   }
   else
   {
-    long long int high = getHigh(x);
-    long long int low  = getLow(x);
+    int high = getHigh(x);
+    int low  = getLow(x);
 
-    long long int maxLow = VEBTREE_NIL;
+    int maxLow = VEBTREE_NIL;
 
     if (clusters_[high] != NULL)
     {
@@ -114,7 +114,7 @@ long long int VEBTree::successor(long long int x)
 
     if (maxLow != VEBTREE_NIL && low < maxLow)
     {
-      long long int offset = clusters_[high] -> successor(low);
+      int offset = clusters_[high] -> successor(low);
 
       return index(high, offset);
     }
@@ -125,7 +125,7 @@ long long int VEBTree::successor(long long int x)
         return VEBTREE_NIL;
       }
 
-      long long int succCluster = summary_ -> successor(high);
+      int succCluster = summary_ -> successor(high);
 
       if (succCluster == VEBTREE_NIL)
       {
@@ -138,7 +138,7 @@ long long int VEBTree::successor(long long int x)
           return VEBTREE_NIL;
         }
 
-        long long int offset = clusters_[succCluster] -> minimum();
+        int offset = clusters_[succCluster] -> minimum();
 
         return index(succCluster, offset);
       }
@@ -148,7 +148,7 @@ long long int VEBTree::successor(long long int x)
   return VEBTREE_NIL;
 }
 
-long long int VEBTree::predecessor(long long int x)
+int VEBTree::predecessor(int x)
 {
   if (universe_ == 2)
   {
@@ -167,10 +167,10 @@ long long int VEBTree::predecessor(long long int x)
   }
   else
   {
-    long long int high = getHigh(x);
-    long long int low = getLow(x);
+    int high = getHigh(x);
+    int low = getLow(x);
 
-    long long int minLow = VEBTREE_NIL;
+    int minLow = VEBTREE_NIL;
 
     if (clusters_[high] != NULL)
     {
@@ -179,7 +179,7 @@ long long int VEBTree::predecessor(long long int x)
 
     if (minLow != VEBTREE_NIL && low > minLow)
     {
-      long long int offset = clusters_[high] -> predecessor(low);
+      int offset = clusters_[high] -> predecessor(low);
 
       return index(high, offset);
     }
@@ -190,7 +190,7 @@ long long int VEBTree::predecessor(long long int x)
         return VEBTREE_NIL;
       }
 
-      long long int predCluster = summary_ -> predecessor(high);
+      int predCluster = summary_ -> predecessor(high);
 
       if (predCluster == VEBTREE_NIL)
       {
@@ -210,7 +210,7 @@ long long int VEBTree::predecessor(long long int x)
           return VEBTREE_NIL;
         }
 
-        long long int offset = clusters_[predCluster] -> maximum();
+        int offset = clusters_[predCluster] -> maximum();
 
         return index(predCluster, offset);
       }
@@ -220,7 +220,7 @@ long long int VEBTree::predecessor(long long int x)
   return VEBTREE_NIL;
 }
 
-bool VEBTree::member(long long int x)
+bool VEBTree::member(int x)
 {
   if (x == min_ || x == max_)
   {
@@ -232,8 +232,8 @@ bool VEBTree::member(long long int x)
   }
   else
   {
-    long long int high = getHigh(x);
-    long long int low  = getLow(x);
+    int high = getHigh(x);
+    int low  = getLow(x);
 
     if (clusters_[high] != NULL)
     {

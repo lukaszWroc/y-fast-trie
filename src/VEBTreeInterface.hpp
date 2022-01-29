@@ -10,13 +10,13 @@ class VEBTreeInterface : public TreeBase
   VEBTree *tree_;
 
 public:
-  VEBTreeInterface(std::vector<long long int>& input, long long int universe);
+  VEBTreeInterface(std::vector<int>& input, int universe);
   ~VEBTreeInterface();
 
-  long long int predecessor(long long int x);
-  long long int successor(long long int x);
+  int predecessor(int x);
+  int successor(int x);
 
-  bool member(long long int x);
+  bool member(int x);
 };
 
 #endif // VEBTREEINTERFACE_H

@@ -10,29 +10,29 @@
 
 class YFastTrie
 {
-  long long int universe_;
-  long long int bstSize_;
+  int universe_;
+  int bstSize_;
 
-  std::vector<long long int> input_;
+  std::vector<int> input_;
   std::vector<BST> bstList_;
 
   XFastTrie *xFastTrie;
 
-  PerfectHash<long long int, BST> numToBst_;
+  PerfectHash<int, int> numToBst_;
 
 public:
-  YFastTrie(long long int universe, const std::vector<long long int> &input);
-  YFastTrie(long long int universe, const std::vector<long long int> &input, int state);
+  YFastTrie(int universe, std::vector<int> &input);
+  YFastTrie(int universe, std::vector<int> &input, int state);
   ~YFastTrie();
 
-  void init(const std::vector<long long int> &input);
+  void init(std::vector<int> &input);
 
-  bool member(long long int x);
+  bool member(int x);
 
-  std::pair<BST*, BST*> predSuccBase(long long int x);
+  std::pair<BST*, BST*> predSuccBase(int x);
 
-  long long int predecessor(long long int x);
-  long long int successor(long long int x);
+  int predecessor(int x);
+  int successor(int x);
 };
 
 #endif // YFASTTRIE_H

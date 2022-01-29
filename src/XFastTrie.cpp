@@ -3,51 +3,55 @@
 #include <algorithm>
 #include <set>
 
-XFastTrie::XFastTrie(long long int universe, const std::vector<long long int> &input) : universe_(universe),
-  levels_(63 - __builtin_clzl(universe)), input_(input)
+XFastTrie::XFastTrie(int universe, std::vector<int> &input) : universe_(universe),
+  levels_(63 - __builtin_clzl(universe))
 {
-  long long int levels = levels_;
+  std::swap(input, input_);
+
+  int levels = levels_;
 
   sort(input_.begin(), input_.end());
 
-  std::vector<long long int> tmp;
-  std::vector<long long int> tmp2;
+  std::vector<int> tmp;
 
   levelsList_.resize(levels_ + 1);
 
-  for (long long int i=0;i<(long long int)input_.size();i++)
+  for (int i=0;i<(int)input_.size();i++)
   {
     if (i-1>=0 && input_[i-1] == input_[i])
     {
       continue;
     }
 
-    long long int x = input_[i];
+    int x = input_[i];
 
     levelsList_[levels].insert(x, new InternalNode(i, i, i));
 
-    tmp.push_back(x);
+    tmp.emplace_back(x);
   }
 
   while (--levels)
   {
-    std::set<long long int> helperSet;
+    std::set<int> helperSet;
 
     for (size_t i=0;i<tmp.size();i++)
     {
-      long long int x = tmp[i] >> 1;
+      int x = tmp[i] >> 1;
 
       helperSet.insert(x);
     }
 
-    for (std::set<long long int>::iterator it = helperSet.begin(); it != helperSet.end(); it++)
+    tmp.clear();
+    tmp.shrink_to_fit();
+
+    for (std::set<int>::iterator it = helperSet.begin(); it != helperSet.end(); it++)
     {
-      long long int x = *it;
+      int x = *it;
 
-      tmp2.push_back(x);
+      tmp.emplace_back(x);
 
-      long long int xl = x << 1;
-      long long int xp = (x << 1) | 1;
+      int xl = x << 1;
+      int xp = (x << 1) | 1;
 
       InternalNode *nl = levelsList_[levels + 1].find(xl);
       InternalNode *nr = levelsList_[levels + 1].find(xp);
@@ -66,10 +70,6 @@ XFastTrie::XFastTrie(long long int universe, const std::vector<long long int> &i
         levelsList_[levels].insert(x, new InternalNode(nr -> getIndexLeft(), nr -> getIndexRight(), nr -> getIndexLeft()));
       }
     }
-
-    swap(tmp, tmp2);
-
-    tmp2.clear();
   }
 }
 
@@ -78,14 +78,14 @@ XFastTrie::~XFastTrie()
   levelsList_.clear();
 }
 
-bool XFastTrie::member(long long int x)
+bool XFastTrie::member(int x)
 {
   return levelsList_[levels_].find(x) != NULL;
 }
 
-long long int XFastTrie::predSuccBase(long long int x)
+int XFastTrie::predSuccBase(int x)
 {
-  long long int l=0, r=levels_, m;
+  int l=0, r=levels_, m;
 
   InternalNode *node = NULL;
 
@@ -113,9 +113,9 @@ long long int XFastTrie::predSuccBase(long long int x)
   return -1;
 }
 
-long long int XFastTrie::predecessor(long long int x)
+int XFastTrie::predecessor(int x)
 {
-  long long int idx = predSuccBase(x);
+  int idx = predSuccBase(x);
 
   if (idx != -1)
   {
@@ -132,9 +132,9 @@ long long int XFastTrie::predecessor(long long int x)
   return -1;
 }
 
-long long int XFastTrie::successor(long long int x)
+int XFastTrie::successor(int x)
 {
-  long long int idx = predSuccBase(x);
+  int idx = predSuccBase(x);
 
   if (idx != -1)
   {
@@ -142,7 +142,7 @@ long long int XFastTrie::successor(long long int x)
     {
       return input_[idx];
     }
-    else if (++idx < (long long int)input_.size())
+    else if (++idx < (int)input_.size())
     {
       return input_[idx];
     }

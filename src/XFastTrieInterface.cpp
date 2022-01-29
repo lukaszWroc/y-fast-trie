@@ -1,6 +1,6 @@
 #include "XFastTrieInterface.hpp"
 
-XFastTrieInterface::XFastTrieInterface(std::vector<long long int>& input, long long int universe)
+XFastTrieInterface::XFastTrieInterface(std::vector<int>& input, int universe)
 {
   tree_ = new XFastTrie(universe, input);
 }
@@ -15,17 +15,17 @@ XFastTrieInterface::~XFastTrieInterface()
   }
 }
 
-long long int XFastTrieInterface::predecessor(long long int x)
+int XFastTrieInterface::predecessor(int x)
 {
   return tree_ -> predecessor(x);
 }
 
-long long int XFastTrieInterface::successor(long long int x)
+int XFastTrieInterface::successor(int x)
 {
   return tree_ -> successor(x);
 }
 
-bool XFastTrieInterface::member(long long int x)
+bool XFastTrieInterface::member(int x)
 {
   return tree_ -> member(x);
 }

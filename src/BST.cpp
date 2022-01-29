@@ -4,22 +4,22 @@ BST::BST() : max_(-1), min_(-1)
 {
 }
 
-long long int BST::maximum()
+int BST::maximum()
 {
   return max_;
 }
 
-long long int BST::minimum()
+int BST::minimum()
 {
   return min_;
 }
 
-long long int BST::size()
+int BST::size()
 {
   return set_.size();
 }
 
-void BST::insert(long long int x)
+void BST::insert(int x)
 {
   if (x > max_)
   {
@@ -35,14 +35,14 @@ void BST::insert(long long int x)
   rSet_.insert(-x);
 }
 
-bool BST::find(long long int x)
+bool BST::find(int x)
 {
   return set_.find(x) != set_.end();
 }
 
-long long int BST::predecessor(long long int x)
+int BST::predecessor(int x)
 {
-  std::set<long long int>::iterator it = rSet_.upper_bound(-x);
+  std::set<int>::iterator it = rSet_.upper_bound(-x);
 
   if (it != rSet_.end())
   {
@@ -52,9 +52,9 @@ long long int BST::predecessor(long long int x)
   return -1;
 }
 
-long long int BST::successor(long long int x)
+int BST::successor(int x)
 {
-  std::set<long long int>::iterator it = set_.upper_bound(x);
+  std::set<int>::iterator it = set_.upper_bound(x);
 
   if (it != set_.end())
   {

@@ -7,10 +7,10 @@ class TreeBase
 public:
   virtual ~TreeBase();
 
-  virtual bool member(long long int x) = 0;
+  virtual bool member(int x) = 0;
 
-  virtual long long int predecessor(long long int x) = 0;
-  virtual long long int successor(long long int x) = 0;
+  virtual int predecessor(int x) = 0;
+  virtual int successor(int x) = 0;
 };
 
 #endif // TREEBASE_H

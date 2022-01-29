@@ -1,10 +1,10 @@
 #include "VEBTreeInterface.hpp"
 
-VEBTreeInterface::VEBTreeInterface(std::vector<long long int>& input, long long int universe)
+VEBTreeInterface::VEBTreeInterface(std::vector<int>& input, int universe)
 {
   tree_ = new VEBTree(universe);
 
-  for (long long int x : input)
+  for (int x : input)
   {
     tree_ ->insert(x);
   }
@@ -20,17 +20,17 @@ VEBTreeInterface::~VEBTreeInterface()
   }
 }
 
-long long int VEBTreeInterface::predecessor(long long int x)
+int VEBTreeInterface::predecessor(int x)
 {
   return tree_ -> predecessor(x);
 }
 
-long long int VEBTreeInterface::successor(long long int x)
+int VEBTreeInterface::successor(int x)
 {
   return tree_ -> successor(x);
 }
 
-bool VEBTreeInterface::member(long long int x)
+bool VEBTreeInterface::member(int x)
 {
   return tree_ -> member(x);
 }
